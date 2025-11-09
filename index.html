@@ -172,6 +172,31 @@
                     </div>
                 </div>
 
+                <div class="timers-grid">
+                    <!-- FRANCE -->
+                    <div class="destination-timer" data-date="2026-04-23T00:00:00" data-location="France">
+                        <h3>🇫🇷 France</h3>
+                        <div class="countdown">
+                            <span class="days">000</span>d
+                            <span class="hours">00</span>h
+                            <span class="minutes">00</span>m
+                            <span class="seconds">00</span>s
+                        </div>
+                    </div>
+
+                    <!-- SPAIN -->
+                    <div class="destination-timer" data-date="2026-05-23T00:00:00" data-location="Spain">
+                        <h3>🇪🇸 Spain</h3>
+                        <div class="countdown">
+                            <span class="days">000</span>d
+                            <span class="hours">00</span>h
+                            <span class="minutes">00</span>m
+                            <span class="seconds">00</span>s
+                        </div>
+                    </div>
+
+                    <!-- Ajoute d'autres pays ici -->
+                </div>
                 <p class="countdown-footer">🎯 First destination: <span class="highlight">To be announced soon</span>
                 </p>
             </div>
@@ -197,18 +222,11 @@
                     <div class="partner-card">
                         <div class="partner-logo">ALGERIAN ELITE</div>
                     </div>
+                    <!--
                     <div class="partner-card">
                         <div class="partner-logo">PARTNER 5</div>
                     </div>
-                    <div class="partner-card">
-                        <div class="partner-logo">PARTNER 6</div>
-                    </div>
-                    <div class="partner-card">
-                        <div class="partner-logo">PARTNER 7</div>
-                    </div>
-                    <div class="partner-card">
-                        <div class="partner-logo">PARTNER 8</div>
-                    </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -230,7 +248,8 @@
                             </div>
                         </div>
                         <div class="testimonial-text">
-                            "M.T.B.F provided us with an exceptional platform to showcase our traditional crafts to European markets. 
+                            "M.T.B.F provided us with an exceptional platform to showcase our traditional crafts to
+                            European markets.
                             The networking opportunities were invaluable."
                         </div>
                     </div>
@@ -244,8 +263,10 @@
                             </div>
                         </div>
                         <div class="testimonial-text">
-                            "I would be delighted to participate in this event and help introduce our flavors and culinary expertise to the public.
-                            The Mediterranean Trade & Business Fair is an excellence platform to showcase our rich gastronomic heritage."
+                            "I would be delighted to participate in this event and help introduce our flavors and
+                            culinary expertise to the public.
+                            The Mediterranean Trade & Business Fair is an excellence platform to showcase our rich
+                            gastronomic heritage."
                         </div>
                     </div>
                     <!--
@@ -262,7 +283,7 @@
                             We met incredible partners and discovered new business opportunities across Europe."
                         </div>
                     </div>
-
+                    
                     <div class="testimonial-card">
                         <div class="testimonial-header">
                             <div class="testimonial-photo">👤</div>
@@ -318,8 +339,9 @@
                 </div>
                 <div class="sponsors-grid">
                     <div class="sponsor-logo">
-                        <span>SPONSOR 1</span>
+                        <span>ALGERIAN ELITE</span>
                     </div>
+                    <!--
                     <div class="sponsor-logo">
                         <span>SPONSOR 2</span>
                     </div>
@@ -329,6 +351,7 @@
                     <div class="sponsor-logo">
                         <span>SPONSOR 4</span>
                     </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -344,7 +367,7 @@
                 <div class="contact-content">
                     <!-- Contact Form -->
                     <div class="contact-form">
-                        <form action="sendmail.php" method="POST" id ="contactForm">
+                        <form action="sendmail.php" method="POST" id="contactForm">
                             <div class="form-group">
                                 <label for="name">Full Name *</label>
                                 <input type="text" id="name" name="name" required placeholder="Your full name">
@@ -452,7 +475,7 @@
 
         // Countdown Timer
         function updateCountdown() {
-            // Set target date to Avrile 2, 2026
+            // Set target date to Avrile 23, 2026
             const targetDate = new Date('2026-04-02T00:00:00').getTime();
             const now = new Date().getTime();
             const distance = targetDate - now;
@@ -474,6 +497,39 @@
             if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
             if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
         }
+        function startMultipleCountdowns() {
+            const timers = document.querySelectorAll(".destination-timer");
+
+            timers.forEach(timer => {
+                const targetDate = new Date(timer.dataset.date).getTime();
+
+                function updateTimer() {
+                    const now = new Date().getTime();
+                    const distance = targetDate - now;
+
+                    if (distance < 0) {
+                        timer.querySelector(".countdown").textContent = "🎉 Event Started!";
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    timer.querySelector(".days").textContent = String(days).padStart(3, '0');
+                    timer.querySelector(".hours").textContent = String(hours).padStart(2, '0');
+                    timer.querySelector(".minutes").textContent = String(minutes).padStart(2, '0');
+                    timer.querySelector(".seconds").textContent = String(seconds).padStart(2, '0');
+                }
+
+                updateTimer();
+                setInterval(updateTimer, 1000);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", startMultipleCountdowns);
+
 
         // Update countdown every second
         setInterval(updateCountdown, 1000);
